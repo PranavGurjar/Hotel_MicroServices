@@ -9,6 +9,16 @@
         <outputRelativeToContentRoot value="true" />
         <module name="ServiceRegistry" />
       </profile>
+      <profile name="Annotation profile for RatingServices" enabled="true">
+        <sourceOutputDir name="target/generated-sources/annotations" />
+        <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
+        <outputRelativeToContentRoot value="true" />
+        <processorPath useClasspath="false">
+          <entry name="$MAVEN_REPOSITORY$/org/projectlombok/lombok/1.18.38/lombok-1.18.38.jar" />
+          <entry name="$MAVEN_REPOSITORY$/org/projectlombok/lombok/1.18.38/lombok-1.18.38.jar" />
+        </processorPath>
+        <module name="RatingServices" />
+      </profile>
       <profile name="Annotation profile for ApiGateway" enabled="true">
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
@@ -16,10 +26,9 @@
         <processorPath useClasspath="false">
           <entry name="$MAVEN_REPOSITORY$/org/projectlombok/lombok/unknown/lombok-unknown.jar" />
         </processorPath>
-        <module name="RatingServices" />
+        <module name="ApiGateway" />
         <module name="UserServices" />
         <module name="HotelServices" />
-        <module name="ApiGateway" />
       </profile>
     </annotationProcessing>
   </component>
