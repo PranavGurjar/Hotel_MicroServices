@@ -30,7 +30,7 @@ public class UserServiceImpl implements UserService {
 
     @Autowired
     private UserRepository userRepository;
-
+    
     private Logger logger = LoggerFactory.getLogger(UserServiceImpl.class);
 
     @Override
