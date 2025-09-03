@@ -26,6 +26,23 @@ spring:
   config:
     import: optional:configserver:http://localhost:9091
 
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          issuer-uri: https://dev-77584981.okta.com/oauth2/default
+      client:
+        registration:
+          my-internal-client:
+            provider: okta
+            authorization-grant-type: client_credentials
+            scope: internal
+            client-id: 0oa7w65a24Px90yms5d7
+            client-secret: JfsTTq0DW21uapbbhKjW42sGzjcNs86GN7WL5dfU
+        provider:
+          okta:
+            issuer-uri: https://dev-77584981.okta.com/oauth2/default
+
 
 #eureka:
 #  instance:
@@ -100,3 +117,9 @@ resilience4j:
 logging:
   level:
     io.github.resilience4j.ratelimiter: DEBUG
+
+
+okta:
+  oauth2:
+    issuer: https://dev-77584981.okta.com/oauth2/default
+    audience: api://default
