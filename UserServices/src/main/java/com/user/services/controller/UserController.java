@@ -3,6 +3,7 @@ package com.user.services.controller;
 import com.user.services.entites.User;
 import com.user.services.service.UserService;
 import io.github.resilience4j.circuitbreaker.annotation.CircuitBreaker;
+import io.github.resilience4j.ratelimiter.annotation.RateLimiter;
 import io.github.resilience4j.retry.annotation.Retry;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -30,28 +31,50 @@ public class UserController {
     }
 
     //single user get
-    @GetMapping("/{userId}")
+
     // @CircuitBreaker(name = "ratingHotelBreaker", fallbackMethod = "ratingHotelFallback")
-    @Retry(name = "ratingHotelService", fallbackMethod = "ratingHotelFallback")
+    // @Retry(name = "ratingHotelService", fallbackMethod = "ratingHotelFallback")
+    @GetMapping("/{userId}")
+    @RateLimiter(name = "userRateLimiter", fallbackMethod = "ratingHotelFallback")
     public ResponseEntity<User> getSingleUser(@PathVariable String userId){
         User user = userService.getUser(userId);
         return ResponseEntity.ok(user);
     }
 
+
+
     //creating fall back method for circuit breaker
-    int retryCount = 1;
+    // int retryCount = 1;
+    /*
     public ResponseEntity<User> ratingHotelFallback(String userId, Exception ex){
-        // logger.info("Fallback is executed because service is down : ", ex.getMessage());
-        logger.info("Retry count: {}",retryCount);
-        retryCount++;
+
+        // logger.info("Fallback is executed because service is down : ", ex.getMessage());   //CircuitBreaker
+
+        // logger.info("Retry count: {}",retryCount);    //Retry
+        // retryCount++;
+
         User user = User.builder()
-                        .email("dummy@gmail.com")
-                        .name("dummy")
-                        .about("This user is created dummy because some service is down")
-                        .userId("1234")
-                        .build();
+                .email("dummy@gmail.com")
+                .name("dummy")
+                .about("This user is created dummy because some service is down")
+                .userId("1234")
+                .build();
         return new ResponseEntity<>(user, HttpStatus.OK);
+    }*/
+
+
+    public ResponseEntity<User> ratingHotelFallback(String userId) {
+
+        User user = User.builder()
+                .email("dummy@gmail.com")
+                .name("RateLimiter Dummy")
+                .about("Request blocked due to rate limiting")
+                .userId("1234")
+                .build();
+
+        return new ResponseEntity<>(user, HttpStatus.TOO_MANY_REQUESTS);
     }
+
 
 
     //all user get
