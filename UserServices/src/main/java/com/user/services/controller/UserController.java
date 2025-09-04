@@ -63,7 +63,9 @@ public class UserController {
     }*/
 
 
-    public ResponseEntity<User> ratingHotelFallback(String userId) {
+    public ResponseEntity<User> ratingHotelFallback(String userId, Exception ex) {
+
+        ex.printStackTrace();
 
         User user = User.builder()
                 .email("dummy@gmail.com")
